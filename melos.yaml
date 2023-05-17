@@ -1,0 +1,6 @@
+name: surux
+repository: https://github.com/SultanAbbas0/SuruxMono
+
+packages:
+    - 'apps/**'
+    - 'packages/**'
