@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Flutter Run -&gt; 'my_daily_spending'" type="FlutterRunConfigurationType" factoryName="Flutter">
+    <option name="filePath" value="$PROJECT_DIR$/apps\\my_daily_spending\lib\main.dart" />
+    <method v="2" />
+  </configuration>
+</component>

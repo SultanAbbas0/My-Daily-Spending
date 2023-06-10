@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/apps\\my_daily_spending/melos_my_daily_spending.iml" filepath="$PROJECT_DIR$/apps\\my_daily_spending/melos_my_daily_spending.iml" />
+      <module fileurl="file://$PROJECT_DIR$/melos_surux.iml" filepath="$PROJECT_DIR$/melos_surux.iml" />
+    </modules>
+  </component>
+</project>
