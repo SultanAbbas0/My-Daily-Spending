@@ -34,6 +34,8 @@ And finally, the authentication screen.
 
 # Tech used
 
+Developed using Flutter
+
 State managemnet: Riverpod
 
 Responsive UI: flutter_screenutil
