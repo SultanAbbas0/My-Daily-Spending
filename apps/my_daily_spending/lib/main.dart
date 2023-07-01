@@ -1,17 +1,30 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_daily_spending/app.dart';
 import 'package:my_daily_spending/auth/secrets.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+// TODO. implement change name.
+// TODO. solve the arabic crop.
+// TODO. round the balance
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //TODO. can't share this on gitHub
+  await EasyLocalization.ensureInitialized();
   await Supabase.initialize(
     url: supabaseUrl,
     anonKey: supabaseAnonKey,
   );
-  await Supabase.instance.client.auth.signInWithPassword(
-      email: 'sultanabbas018@gmail.com', password: '123456');
-  runApp(const ProviderScope(child: MyApp()));
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [
+        Locale('ar', 'SA'),
+        Locale('en', 'US'),
+      ],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en', 'US'),
+      child: const ProviderScope(child: MyApp()),
+    ),
+  );
 }

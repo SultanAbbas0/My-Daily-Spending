@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,8 +6,10 @@ import 'package:my_daily_spending/constants.dart';
 import 'package:my_daily_spending/providers/providers.dart';
 import 'package:my_daily_spending/repositories/balance_repository.dart';
 import 'package:my_daily_spending/repositories/budget_repository.dart';
+import 'package:my_daily_spending/repositories/saving_repository.dart';
 import 'package:my_daily_spending/reusable_components/cancel_button.dart';
 import 'package:my_daily_spending/reusable_components/continue_button.dart';
+import 'package:my_daily_spending/reusable_components/loading_dialog.dart';
 import 'package:my_daily_spending/reusable_components/text_field_container.dart';
 
 showSetBudgetDialog(BuildContext context, int index) {
@@ -18,16 +21,18 @@ showSetBudgetDialog(BuildContext context, int index) {
             final budgetTextController = TextEditingController();
             final savingAmountTextController = TextEditingController();
             final savingPercentageTextController = TextEditingController();
+
             updateBalance(double newBalance) async {
               await BalanceRepository.updateBalance(newBalance);
               ref.invalidate(balance);
             }
 
             return Dialog(
+              elevation: 0,
               backgroundColor: Colors.blue,
               insetPadding: const EdgeInsets.symmetric(horizontal: 130),
               child: Container(
-                height: 150.h,
+                height: 168.h,
                 decoration: BoxDecoration(
                   borderRadius: borderRadius(30.r),
                 ),
@@ -36,7 +41,7 @@ showSetBudgetDialog(BuildContext context, int index) {
                     height: 10.h,
                   ),
                   Text(
-                    'Budget',
+                    'Budget'.tr(),
                     style: defaultTextStyle.copyWith(fontSize: 13.sp),
                   ),
                   SizedBox(
@@ -68,7 +73,7 @@ showSetBudgetDialog(BuildContext context, int index) {
                     height: 11.h,
                   ),
                   Text(
-                    'Saving',
+                    'Saving'.tr(),
                     style: defaultTextStyle.copyWith(fontSize: 13.sp),
                   ),
                   SizedBox(
@@ -78,7 +83,7 @@ showSetBudgetDialog(BuildContext context, int index) {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CustomColumn(
-                        text: 'amount',
+                        text: 'amount'.tr(),
                         textController: savingAmountTextController,
                         onChanged: (_) {
                           if (savingAmountTextController.text.isNotEmpty &&
@@ -98,7 +103,7 @@ showSetBudgetDialog(BuildContext context, int index) {
                         width: 19.w,
                       ),
                       CustomColumn(
-                        text: 'percentage',
+                        text: 'percentage'.tr(),
                         textController: savingPercentageTextController,
                         onChanged: (_) {
                           if (savingPercentageTextController.text.isNotEmpty &&
@@ -125,7 +130,7 @@ showSetBudgetDialog(BuildContext context, int index) {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CancelButton(
-                        text: 'Cancel',
+                        text: 'Cancel'.tr(),
                         height: 25.h,
                         width: 60.w,
                         fontSize: 13.sp,
@@ -134,39 +139,54 @@ showSetBudgetDialog(BuildContext context, int index) {
                         width: 10.w,
                       ),
                       ContinueButton(
-                        text: 'Confirm',
+                        text: 'Confirm'.tr(),
                         onTap: () async {
                           if (budgetTextController.value.text.isEmpty) {
                             return;
                           }
+                          showloadingDialog(context);
+                          final savingDeduction = savingAmountTextController
+                                  .text.isEmpty
+                              ? 0
+                              : double.parse(savingAmountTextController.text);
+                          final finalBalance =
+                              (double.parse(budgetTextController.value.text) -
+                                  savingDeduction);
                           await BudgetRepository.updateBudget(
                               double.parse(budgetTextController.value.text));
                           ref.invalidate(budget);
+                          if (savingAmountTextController.text.isNotEmpty) {
+                            await SavingRepository.addToSaving(
+                                double.parse(savingAmountTextController.text));
+                            ref.invalidate(saving);
+                          }
                           switch (index) {
                             case 1:
                               {
-                                await updateBalance(double.parse(
-                                        budgetTextController.value.text) /
-                                    7);
+                                await updateBalance(finalBalance / 7);
+                                await BalanceRepository.updateSystem('Weekly');
+                                ref.invalidate(system);
                               }
                               break;
                             case 2:
                               {
-                                await updateBalance(double.parse(
-                                        budgetTextController.value.text) /
-                                    30);
+                                await updateBalance(finalBalance / 30);
+                                await BalanceRepository.updateSystem('Monthly');
+                                ref.invalidate(system);
                               }
                               break;
                             case 3:
                               {
-                                await updateBalance(double.parse(
-                                        budgetTextController.value.text) /
-                                    365);
+                                await updateBalance(finalBalance / 365);
+                                await BalanceRepository.updateSystem('Yearly');
+                                ref.invalidate(system);
                               }
                               break;
                           }
                           if (context.mounted) {
-                            Navigator.of(context).pop();
+                            Navigator.of(context, rootNavigator: true)
+                              ..pop()
+                              ..pop();
                           }
                         },
                         height: 25.h,

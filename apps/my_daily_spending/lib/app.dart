@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_daily_spending/constants.dart';
@@ -13,6 +14,9 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       builder: (context, child) {
         return MaterialApp(
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: Locale(context.locale.languageCode),
           debugShowCheckedModeBanner: false,
           theme: ThemeData(scaffoldBackgroundColor: scaffoldBackgroundColor),
           home: child,

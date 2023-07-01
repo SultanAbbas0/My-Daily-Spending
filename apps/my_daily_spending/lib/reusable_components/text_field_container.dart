@@ -11,6 +11,9 @@ class TextFieldContainer extends StatelessWidget {
     this.textController,
     this.child,
     this.onChanged,
+    this.keyboardType,
+    this.obscureText,
+    this.textAlign,
   });
   final double height;
   final double width;
@@ -18,6 +21,9 @@ class TextFieldContainer extends StatelessWidget {
   final TextEditingController? textController;
   final Widget? child;
   final void Function(String)? onChanged;
+  final TextInputType? keyboardType;
+  final bool? obscureText;
+  final TextAlign? textAlign;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,9 +34,10 @@ class TextFieldContainer extends StatelessWidget {
           BoxDecoration(color: Colors.white, borderRadius: borderRadius(300.r)),
       child: withTextField
           ? TextField(
+              obscureText: obscureText ?? false,
               controller: withTextField ? textController : null,
-              textAlign: TextAlign.center,
-              keyboardType: TextInputType.number,
+              textAlign: textAlign ?? TextAlign.center,
+              keyboardType: keyboardType ?? TextInputType.number,
               decoration: const InputDecoration(
                 isCollapsed: true,
                 border: InputBorder.none,

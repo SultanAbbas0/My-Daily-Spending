@@ -14,25 +14,25 @@ class DoubleEllipseContainer extends StatelessWidget {
         onTap.call(context);
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: 86.h, left: 40.w),
+        margin: EdgeInsets.only(bottom: 86.h),
         child: Stack(
           clipBehavior: Clip.none,
           children: [
             const Ellipse(color: Color.fromRGBO(3, 59, 156, 0.15)),
-            Positioned(
+            PositionedDirectional(
               top: 10.h,
               child: const Ellipse(
                 color: Color.fromRGBO(123, 116, 99, 0.141),
               ),
             ),
-            Positioned(
+            PositionedDirectional(
               bottom: 18.h,
-              left: -3.w,
+              start: -3.w,
               child: const Dot(),
             ),
-            Positioned(
+            PositionedDirectional(
               bottom: 13.h,
-              left: 15.w,
+              start: 15.w,
               child: Text(
                 text,
                 style: defaultTextStyle.copyWith(fontSize: 20.sp),

@@ -14,7 +14,7 @@ class TitleContainer extends StatelessWidget {
       height: 36.h,
       width: 288.w,
       alignment: Alignment.center,
-      margin: EdgeInsets.only(left: 52.w, top: 31.h),
+      margin: EdgeInsets.only(top: 31.h),
       decoration: BoxDecoration(
         color: Colors.black54,
         borderRadius: borderRadius(250.r),

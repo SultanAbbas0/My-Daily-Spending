@@ -41,6 +41,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   supabase_flutter: ^1.10.1
   riverpod_annotation: ^2.1.1
+  hooks_riverpod: ^2.3.6
+  flutter_svg: ^2.0.7
+  image_picker: ^0.8.9
+  url_launcher: ^6.1.11
+  flutter_localizations:
+    sdk: flutter
+  easy_localization: ^3.0.2
 
 dev_dependencies:
   flutter_test:
@@ -64,9 +71,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/logos/
+    - assets/translations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
