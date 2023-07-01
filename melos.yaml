@@ -1,6 +1,6 @@
 name: surux
-repository: https://github.com/SultanAbbas0/SuruxMono
+repository: https://github.com/SultanAbbas0/My-Daily-Spending
 
 packages:
-    - 'apps/**'
-    - 'packages/**'
+    - "apps/**"
+    - "packages/**"
