@@ -49,7 +49,7 @@ FlutterHooks
 # Features
 Auth system.
 
-Getting and sending values from/to the database.
+Getting and sending data from/to the database.
 
 English/Arabic localization.
 
